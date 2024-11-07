@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Conversion Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+         /* Styling for the alert box */
+         .alert {
+            padding: 15px;
+            position: absolute;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            
+        }
+        .alert.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .alert.error {
+            background-color: #f44336;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Flash message display area (alert box) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <div class="container">
+        <h1>File Conversion Tool</h1>
+        <form action="/convert" method="post" enctype="multipart/form-data">
+            <label for="file">Choose a file:</label>
+            <input type="file" id="file" name="file" required><br><br>
+            
+            <label for="format">Select output format:</label>
+            <select id="format" name="format" required>
+                <option value="pdf">PDF</option>
+                <option value="docx">DOCX</option>
+                <option value="png">PNG</option>
+                
+            </select><br><br>
+            
+            <button type="submit">Convert</button>
+        </form>
+    </div>
+    <div class="footer">
+        <p>&copy; EasyConversion | Made with ❤️</p>
+    </div>
+</body>
+<script>
+     window.onload = function() {
+            // Select the alert box (if any)
+            var alertBox = document.querySelector('.alert');
+            if (alertBox) {
+                alertBox.style.display = 'block';  // Show the alert box
+                setTimeout(function() {
+                    alertBox.style.display = 'none'; // Hide it after 5 seconds
+                }, 5000); // 5 seconds timeout for the alert
+            }
+        };
+</script>
+</html>
