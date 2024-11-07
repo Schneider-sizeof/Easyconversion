@@ -8,10 +8,18 @@ from reportlab.pdfgen import canvas
 from PIL import Image
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT not provided
-    app.run(host="0.0.0.0", port=port)
+# Define the Flask application
+app = Flask(__name__)
 
+# Define a route for the home page
+@app.route('/')
+def home():
+    return "Hello, World!"
+
+# Ensure the app listens on the correct host and port
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Get the port from environment variables or default to 5000
+    app.run(host="0.0.0.0", port=port)  # Listen on all interfaces
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
