@@ -57,6 +57,6 @@ button {
 }
 p{
     position: relative; 
-    top:250px;
-    right: 350px;
+    top:0;
+    right: 0;
 }
