@@ -7,29 +7,21 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PIL import Image
 
-
 # Define the Flask application
 app = Flask(__name__)
 
-# Define a route for the home page
-@app.route('/')
-def home():
-    return "Hello, World!"
-
-# Ensure the app listens on the correct host and port
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Get the port from environment variables or default to 5000
-    app.run(host="0.0.0.0", port=port)  # Listen on all interfaces
-app = Flask(__name__)
+# Configuration
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'your_secret_key'  # Required for session-based flash messages
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Route for the home page (upload form)
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # Make sure this HTML file exists in the templates folder
 
+# Route for handling file conversion
 @app.route('/convert', methods=['POST'])
 def convert_file():
     uploaded_file = request.files['file']
@@ -76,8 +68,9 @@ def convert_file():
         # If none of the above, just return the uploaded file
         return send_file(file_path, as_attachment=True)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index'))  # Redirect if no file is uploaded
 
+# Conversion Functions
 def convert_docx_to_pdf(docx_path, pdf_path):
     try:
         doc = Document(docx_path)
@@ -117,12 +110,14 @@ def convert_image_to_pdf(image_path, pdf_path):
 def convert_pdf_to_image(pdf_path, image_path, image_format):
     try:
         pdf = fitz.open(pdf_path)
-        page = pdf.load_page(0)
+        page = pdf.load_page(0)  # Get the first page (you can modify this to get more pages)
         pix = page.get_pixmap()
         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
         img.save(image_path, format=image_format.upper())
     except Exception as e:
         print(f"Error during PDF to Image conversion: {e}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Ensure the app listens on the correct host and port
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Get the port from environment variables or default to 5000
+    app.run(host="0.0.0.0", port=port)  # Listen on all interfaces
