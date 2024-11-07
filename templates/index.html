@@ -12,13 +12,26 @@
             background-color: #f8f8f8;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        /* Flex container to center content vertically and horizontally */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         /* Container for the content */
         .container {
             max-width: 600px;
-            width: 90%;
-            margin: 50px auto;
+            width: 100%;
+            margin: 0 auto;
             padding: 20px;
             background-color: #ffffff;
             border-radius: 8px;
@@ -66,6 +79,7 @@
             font-size: 14px;
             margin-top: 30px;
             color: #888;
+            padding: 20px;
         }
 
         /* Styling for alert box */
@@ -92,7 +106,7 @@
         /* Media queries for responsiveness */
         @media (max-width: 768px) {
             .container {
-                width: 95%;
+                width: 90%;
                 padding: 15px;
             }
 
@@ -135,25 +149,27 @@
         {% endif %}
     {% endwith %}
 
-    <!-- Main content of the page -->
-    <div class="container">
-        <h1>File Conversion Tool</h1>
-        <form action="/convert" method="post" enctype="multipart/form-data">
-            <label for="file">Choose a file:</label>
-            <input type="file" id="file" name="file" required><br><br>
-            
-            <label for="format">Select output format:</label>
-            <select id="format" name="format" required>
-                <option value="pdf">PDF</option>
-                <option value="docx">DOCX</option>
-                <option value="png">PNG</option>
-            </select><br><br>
-            
-            <button type="submit">Convert</button>
-        </form>
+    <!-- Main content of the page (using flexbox to center the content) -->
+    <div class="main-content">
+        <div class="container">
+            <h1>File Conversion Tool</h1>
+            <form action="/convert" method="post" enctype="multipart/form-data">
+                <label for="file">Choose a file:</label>
+                <input type="file" id="file" name="file" required><br><br>
+                
+                <label for="format">Select output format:</label>
+                <select id="format" name="format" required>
+                    <option value="pdf">PDF</option>
+                    <option value="docx">DOCX</option>
+                    <option value="png">PNG</option>
+                </select><br><br>
+                
+                <button type="submit">Convert</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (centered) -->
     <div class="footer">
         <p>&copy; EasyConversion | Made with ❤️</p>
     </div>
